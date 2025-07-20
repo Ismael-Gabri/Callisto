@@ -22,7 +22,11 @@ namespace Callisto.Domain.Entities
 
         public int Id { get; private set; }
         public int CompanyId { get; private set; }
+        public Company Company { get; private set; }
         public int TeamId { get; private set; }
+        public Team Team { get; private set; }
+        public int UserId { get; private set; }
+        public User User { get; private set; }
 
         public string Title { get; private set; }
         public string Description { get; private set; }
@@ -33,8 +37,5 @@ namespace Callisto.Domain.Entities
         public DateTime CreationDate { get; private set; }
         public DateTime? UpdateDate { get; private set; }
         public DateTime? ResolutionDate { get; private set; }
-
-        public Company Company { get; private set; }
-        public Team Team { get; private set; }
     }
 }

@@ -4,6 +4,7 @@ using Callisto.Domain.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Callisto.Domain.Infra.Migrations
 {
     [DbContext(typeof(CallistoContext))]
-    partial class CallistoContextModelSnapshot : ModelSnapshot
+    [Migration("20250720221507_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,46 +104,36 @@ namespace Callisto.Domain.Infra.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
-                        .HasColumnType("int")
-                        .HasColumnName("CompanyId");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(max)")
-                        .HasColumnName("Description");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("int")
-                        .HasColumnName("Priority");
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ResolutionDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ResolutionDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int")
-                        .HasColumnName("Status");
+                        .HasColumnType("int");
 
                     b.Property<int>("TeamId")
-                        .HasColumnType("int")
-                        .HasColumnName("TeamId");
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("Title");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdateDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserId");
+                        .HasColumnType("int");
 
                     b.Property<int?>("UserId1")
                         .HasColumnType("int");
@@ -155,7 +148,7 @@ namespace Callisto.Domain.Infra.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.User", b =>
@@ -216,13 +209,13 @@ namespace Callisto.Domain.Infra.Migrations
                     b.HasOne("Callisto.Domain.Entities.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Callisto.Domain.Entities.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Callisto.Domain.Entities.User", "User")

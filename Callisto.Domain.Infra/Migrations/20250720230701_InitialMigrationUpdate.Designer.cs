@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Callisto.Domain.Infra.Migrations
 {
     [DbContext(typeof(CallistoContext))]
-    [Migration("20250720152834_PrimeiraM")]
-    partial class PrimeiraM
+    [Migration("20250720230701_InitialMigrationUpdate")]
+    partial class InitialMigrationUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,30 +35,38 @@ namespace Callisto.Domain.Infra.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("Address");
 
                     b.Property<string>("Cnpj")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("Cnpj");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedAt")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Email");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Name");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("Phone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.Team", b =>
@@ -73,15 +81,18 @@ namespace Callisto.Domain.Infra.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("Name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Team", (string)null);
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.Ticket", b =>
@@ -93,35 +104,48 @@ namespace Callisto.Domain.Infra.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CompanyId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("CompanyId");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationDate");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(max)")
+                        .HasColumnName("Description");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Priority");
 
                     b.Property<DateTime?>("ResolutionDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ResolutionDate");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Status");
 
                     b.Property<int>("TeamId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("TeamId");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("Title");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdateDate");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserId");
+
+                    b.Property<int?>("UserId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -132,7 +156,9 @@ namespace Callisto.Domain.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.User", b =>
@@ -146,33 +172,46 @@ namespace Callisto.Domain.Infra.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CompanyId1")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EntryDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("EntryDate");
 
                     b.Property<DateTime?>("LastLogin")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastLogin");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("PasswordHash");
 
                     b.Property<string>("ProfileImage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("ProfileImage");
 
                     b.Property<int>("Role")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Role");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdateDate");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CompanyId1");
+
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.Ticket", b =>
@@ -189,21 +228,41 @@ namespace Callisto.Domain.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Callisto.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Callisto.Domain.Entities.User", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Company");
 
                     b.Navigation("Team");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.User", b =>
                 {
-                    b.HasOne("Callisto.Domain.Entities.Team", null)
+                    b.HasOne("Callisto.Domain.Entities.Company", null)
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Callisto.Domain.Entities.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Callisto.Domain.Entities.Team", "Team")
                         .WithMany("Users")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.OwnsOne("Callisto.Domain.Value_Objects.Email", "Email", b1 =>
@@ -213,11 +272,12 @@ namespace Callisto.Domain.Infra.Migrations
 
                             b1.Property<string>("Address")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("varchar(150)")
+                                .HasColumnName("Email");
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -230,15 +290,17 @@ namespace Callisto.Domain.Infra.Migrations
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("FirstName");
 
                             b1.Property<string>("LastName")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("LastName");
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -251,15 +313,18 @@ namespace Callisto.Domain.Infra.Migrations
 
                             b1.Property<string>("CellPhone")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("varchar(20)")
+                                .HasColumnName("Phone");
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
+
+                    b.Navigation("Company");
 
                     b.Navigation("Email")
                         .IsRequired();
@@ -269,6 +334,8 @@ namespace Callisto.Domain.Infra.Migrations
 
                     b.Navigation("Phone")
                         .IsRequired();
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Callisto.Domain.Entities.Team", b =>

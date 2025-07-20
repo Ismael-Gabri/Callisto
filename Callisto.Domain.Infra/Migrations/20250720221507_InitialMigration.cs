@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Callisto.Domain.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class PrimeiraM : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,12 +17,12 @@ namespace Callisto.Domain.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cnpj = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "varchar(150)", nullable: false),
+                    Cnpj = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(150)", nullable: false),
+                    Phone = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Address = table.Column<string>(type: "varchar(255)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
                 },
                 constraints: table =>
                 {
@@ -30,34 +30,35 @@ namespace Callisto.Domain.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teams",
+                name: "Team",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "varchar(150)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teams", x => x.Id);
+                    table.PrimaryKey("PK_Team", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
+                    CompanyId1 = table.Column<int>(type: "int", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: false),
-                    Name_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email_Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone_CellPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(150)", nullable: false),
+                    Phone = table.Column<string>(type: "varchar(20)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ProfileImage = table.Column<string>(type: "varchar(255)", nullable: true),
                     Role = table.Column<int>(type: "int", nullable: false),
                     EntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -65,13 +66,25 @@ namespace Callisto.Domain.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
+                        name: "FK_User_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_User_Companies_CompanyId1",
+                        column: x => x.CompanyId1,
+                        principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_User_Team_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,6 +95,7 @@ namespace Callisto.Domain.Infra.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Priority = table.Column<int>(type: "int", nullable: false),
@@ -89,7 +103,7 @@ namespace Callisto.Domain.Infra.Migrations
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ResolutionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    UserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,17 +113,23 @@ namespace Callisto.Domain.Infra.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tickets_Teams_TeamId",
+                        name: "FK_Tickets_Team_TeamId",
                         column: x => x.TeamId,
-                        principalTable: "Teams",
+                        principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tickets_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tickets_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Tickets_User_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "User",
                         principalColumn: "Id");
                 });
 
@@ -129,8 +149,23 @@ namespace Callisto.Domain.Infra.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_TeamId",
-                table: "Users",
+                name: "IX_Tickets_UserId1",
+                table: "Tickets",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_CompanyId",
+                table: "User",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_CompanyId1",
+                table: "User",
+                column: "CompanyId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_TeamId",
+                table: "User",
                 column: "TeamId");
         }
 
@@ -141,13 +176,13 @@ namespace Callisto.Domain.Infra.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "Companies");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Teams");
+                name: "Team");
         }
     }
 }

@@ -11,6 +11,9 @@ namespace Callisto.Domain.Entities
         public Team(int id, string name)
         {
             Name = name;
+            IsActive = true;
+            Users = new List<User>();
+            CreatedAt = DateTime.UtcNow;
         }
 
         public int Id { get; private set; }

@@ -26,7 +26,9 @@ namespace Callisto.Domain.Entities
 
         public int Id { get; private set; }
         public int CompanyId { get; private set; }
+        public Company Company { get; private set; }
         public int TeamId { get; private set; }
+        public Team Team { get; private set; }
         public Name Name { get; private set; }
         public Email Email { get; private set; }
         public Phone Phone { get; private set; }
@@ -37,8 +39,6 @@ namespace Callisto.Domain.Entities
         public DateTime? UpdateDate { get; private set; }
         public DateTime? LastLogin { get; private set; }
         public IReadOnlyCollection<Ticket> Tickets { get { return _tickets.ToArray(); } }
-
-        [NotMapped]
         public IDictionary<string, string> Notifications { get; private set; }
     }
 }
