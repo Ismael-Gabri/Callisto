@@ -12,7 +12,7 @@ namespace Callisto.Domain.Repositories
     {
         void Save(User user);
         void Update(User user);
-        IEnumerable<User> GetAllUsers();
+        List<User> GetAllUsers();
         User GetUserById(int userId);
         void DeleteUserById(int userId);
     }

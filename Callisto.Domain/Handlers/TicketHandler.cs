@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Callisto.Domain.Handlers
 {
-    public class DeleteUserHandler : IHandlers<DeleteUserCommand>
+    public class TicketHandler : IHandlers<CreateTicketCommand>
     {
-        public ICommandResult Handler(DeleteUserCommand command)
+        public ICommandResult Handler(CreateTicketCommand command)
         {
             throw new NotImplementedException();
         }
