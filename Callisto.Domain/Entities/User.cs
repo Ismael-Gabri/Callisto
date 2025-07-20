@@ -1,0 +1,44 @@
+﻿using Callisto.Domain.Enums;
+using Callisto.Domain.Value_Objects;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Callisto.Domain.Entities
+{
+    public class User
+    {
+        protected User()
+        {
+            
+        }
+        private readonly IList<Ticket> _tickets;
+        public User(Name name, Email email, string passwordHash, Phone phone)
+        {
+            Name = name;
+            Email = email;
+            PasswordHash = passwordHash;
+            Phone = phone;
+        }
+
+        public int Id { get; private set; }
+        public int CompanyId { get; private set; }
+        public int TeamId { get; private set; }
+        public Name Name { get; private set; }
+        public Email Email { get; private set; }
+        public Phone Phone { get; private set; }
+        public string PasswordHash { get; private set; }
+        public string? ProfileImage { get; private set; }
+        public ERole Role { get; private set; }
+        public DateTime EntryDate { get; private set; }
+        public DateTime? UpdateDate { get; private set; }
+        public DateTime? LastLogin { get; private set; }
+        public IReadOnlyCollection<Ticket> Tickets { get { return _tickets.ToArray(); } }
+
+        [NotMapped]
+        public IDictionary<string, string> Notifications { get; private set; }
+    }
+}
