@@ -1,4 +1,5 @@
-﻿using Callisto.Domain.Entities;
+﻿using Callisto.Domain.Commands;
+using Callisto.Domain.Entities;
 using Callisto.Domain.Infra.Contexts;
 using Callisto.Domain.Repositories;
 using Callisto.Domain.Value_Objects;
@@ -35,9 +36,9 @@ namespace Callisto.Domain.Infra.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(User updatedUser)
+        public void Update(User user)
         {
-            
+            _context.Users.Update(user);
         }
         public void DeleteUserById(int userId)
         {
@@ -48,6 +49,11 @@ namespace Callisto.Domain.Infra.Repositories
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

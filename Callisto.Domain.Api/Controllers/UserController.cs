@@ -47,5 +47,13 @@ namespace Callisto.Domain.Api.Controllers
             _userRepository.DeleteUserById(id);
             return true;
         }
+
+        [HttpPut("/users")]
+        [AllowAnonymous]
+        public object Delete([FromBody] UpdateUserCommand command)
+        {
+            _handler.Handler(command);
+            return true;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Callisto.Domain.Commands.User_Commands.Output;
+﻿using Callisto.Domain.Commands;
+using Callisto.Domain.Commands.User_Commands.Output;
 using Callisto.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Callisto.Domain.Repositories
         List<User> GetAllUsers();
         User GetUserById(int userId);
         void DeleteUserById(int userId);
+        void SaveChanges();
     }
 }
