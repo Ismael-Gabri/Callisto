@@ -44,5 +44,21 @@ namespace Callisto.Domain.Value_Objects
         public string LastName { get; private set; }
         [NotMapped]
         public IDictionary<string, string> Notifications { get; private set; }
+
+        public void ChangeFirstName(string newFirstName)
+        {
+            if (string.IsNullOrWhiteSpace(newFirstName))
+                throw new Exception("Nome inválido.");
+
+            FirstName = newFirstName;
+        }
+
+        public void ChangeLastName(string newLastName)
+        {
+            if (string.IsNullOrWhiteSpace(newLastName))
+                throw new Exception("Nome inválido.");
+
+            LastName = newLastName;
+        }
     }
 }

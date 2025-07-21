@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Callisto.Domain.Handlers
 {
-    public class UserHandler : IHandlers<GetUserCommand>, IHandlers<CreateUserCommand>
+    public class UserHandler : IHandlers<GetUserCommand>, IHandlers<CreateUserCommand>, IHandlers<UpdateUserCommand>
     {
         IUserRepository _repository;
         public UserHandler(IUserRepository repository)
@@ -46,6 +46,25 @@ namespace Callisto.Domain.Handlers
             _repository.Save(user);
 
             return new CommandResult<User>("Sucesso", user);
+        }
+
+        public ICommandResult Handler(UpdateUserCommand command)
+        {
+            if (!command.Validate()) //Verificar Validação
+                Notifications.Add("Command Validation", "Something is Wrong");
+
+            var user = _repository.GetUserById(command.Id);
+
+            if (!string.IsNullOrWhiteSpace(command.FirstName))
+                user.Name.ChangeFirstName(command.FirstName);
+
+            if (!string.IsNullOrWhiteSpace(command.LastName))
+                user.Name.ChangeLastName(command.LastName);
+
+            _repository.Update(user);
+            _repository.SaveChanges();
+
+            return new CommandResult<User>("Campo alterado com sucesso!", user);
         }
     }
 }
