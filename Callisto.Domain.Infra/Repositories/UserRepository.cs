@@ -1,6 +1,8 @@
 ﻿using Callisto.Domain.Entities;
 using Callisto.Domain.Infra.Contexts;
 using Callisto.Domain.Repositories;
+using Callisto.Domain.Value_Objects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,27 +21,33 @@ namespace Callisto.Domain.Infra.Repositories
 
         public List<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(u => u.Company).Include(u => u.Team).ToList();
         }
 
         public User GetUserById(int userId)
         {
-            throw new NotImplementedException();
+            return _context.Users.Include(u => u.Company).Include(u => u.Team).FirstOrDefault(u => u.Id == userId);
         }
 
         public void Save(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            _context.SaveChanges();
         }
 
-        public void Update(User user)
+        public void Update(User updatedUser)
         {
-            throw new NotImplementedException();
+            
         }
-
         public void DeleteUserById(int userId)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.Find(userId);
+
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+            }
         }
     }
 }

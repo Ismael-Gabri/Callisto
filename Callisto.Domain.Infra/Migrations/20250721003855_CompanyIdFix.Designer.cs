@@ -4,6 +4,7 @@ using Callisto.Domain.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Callisto.Domain.Infra.Migrations
 {
     [DbContext(typeof(CallistoContext))]
-    partial class CallistoContextModelSnapshot : ModelSnapshot
+    [Migration("20250721003855_CompanyIdFix")]
+    partial class CompanyIdFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,7 +193,7 @@ namespace Callisto.Domain.Infra.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Role");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -248,7 +251,8 @@ namespace Callisto.Domain.Infra.Migrations
                     b.HasOne("Callisto.Domain.Entities.Team", "Team")
                         .WithMany("Users")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.OwnsOne("Callisto.Domain.Value_Objects.Email", "Email", b1 =>
                         {
