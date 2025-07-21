@@ -9,11 +9,11 @@ namespace Callisto.Domain.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserRepository _userRepository;
         private readonly UserHandler _handler;
-        public UserController(UserRepository repository, UserHandler handler)
+        public UserController(IUserRepository repository, UserHandler handler)
         {
-            _repository = repository;
+            _userRepository = repository;
             _handler = handler;
         }
 
@@ -21,7 +21,7 @@ namespace Callisto.Domain.Api.Controllers
         [AllowAnonymous]
         public object Get()
         {
-            return _repository.GetAllUsers();
+            return _userRepository.GetAllUsers();
         }
     }
 }
