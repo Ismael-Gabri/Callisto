@@ -24,15 +24,16 @@ namespace Callisto.Domain.Infra.Contexts
                 entity.HasKey(e => e.Id);
 
                 //FKs
-                entity.HasOne<Company>()
+                entity.HasOne(u => u.Company)
                 .WithMany()
-                .HasForeignKey(e => e.CompanyId)
+                .HasForeignKey(u => u.CompanyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne<Team>()
                 .WithMany()
                 .HasForeignKey(e => e.TeamId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
 
                 entity.HasMany<Ticket>()
                 .WithOne(t => t.User) 

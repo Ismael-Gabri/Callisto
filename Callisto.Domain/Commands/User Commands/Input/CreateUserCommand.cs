@@ -13,13 +13,14 @@ namespace Callisto.Domain.Commands
     {
         public CreateUserCommand() { }
 
-        public CreateUserCommand(string firstName, string lastName, string email, string passwordHash, string phone)
+        public CreateUserCommand(string firstName, string lastName, string email, string passwordHash, string phone, int companyId)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             PasswordHash = passwordHash;
             Phone = phone;
+            CompanyId = companyId;
         }
 
         public string FirstName { get; set; }
@@ -27,6 +28,7 @@ namespace Callisto.Domain.Commands
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Phone { get; set; }
+        public int CompanyId { get; set; }
         public Dictionary<string, string> Notifications { get; private set; } = new();
 
         public bool Validate()

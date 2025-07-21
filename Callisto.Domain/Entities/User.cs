@@ -15,20 +15,21 @@ namespace Callisto.Domain.Entities
         {
             
         }
-        private readonly IList<Ticket> _tickets;
-        public User(Name name, Email email, string passwordHash, Phone phone)
+        private readonly IList<Ticket> _tickets = new List<Ticket>();
+        public User(Name name, Email email, string passwordHash, Phone phone, int companyId)
         {
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
             Phone = phone;
+            CompanyId = companyId;
         }
 
         public int Id { get; private set; }
         public int CompanyId { get; private set; }
         public Company Company { get; private set; }
-        public int TeamId { get; private set; }
-        public Team Team { get; private set; }
+        public int? TeamId { get; private set; }
+        public Team? Team { get; private set; }
         public Name Name { get; private set; }
         public Email Email { get; private set; }
         public Phone Phone { get; private set; }
