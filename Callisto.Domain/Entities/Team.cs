@@ -8,7 +8,7 @@ namespace Callisto.Domain.Entities
 {
     public class Team
     {
-        public Team(int id, string name)
+        public Team(string name)
         {
             Name = name;
             IsActive = true;
@@ -19,7 +19,15 @@ namespace Callisto.Domain.Entities
         public int Id { get; private set; }
         public string Name { get; private set; }
         public bool IsActive { get; private set; }
-        public List<User> Users { get; private set; }
+        public List<User>? Users { get; private set; }
         public DateTime CreatedAt { get; private set; }
+
+        public void ChangeTeamName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new Exception("Nome inválido.");
+
+            Name = name;
+        }
     }
 }
