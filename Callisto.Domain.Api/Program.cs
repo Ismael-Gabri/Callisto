@@ -15,6 +15,9 @@ builder.Services.AddScoped<CallistoContext, CallistoContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserHandler, UserHandler>();
 
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<CompanyHandler, CompanyHandler>();
+
 builder.Services.AddDbContext<CallistoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("CallistoConnection"));
