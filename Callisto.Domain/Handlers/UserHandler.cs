@@ -6,6 +6,7 @@ using Callisto.Domain.Entities;
 using Callisto.Domain.Handlers.Contracts;
 using Callisto.Domain.Repositories;
 using Callisto.Domain.Value_Objects;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,9 @@ namespace Callisto.Domain.Handlers
                 Notifications.Add("Name or Email", "Incorrect format");
 
             var user = new User(name, email, command.PasswordHash, phone, command.CompanyId);
+
+            var hasher = new PasswordHasher<User>();
+            user.SetPasswordHash(hasher.HashPassword(user, command.PasswordHash));
 
             _repository.Save(user);
 

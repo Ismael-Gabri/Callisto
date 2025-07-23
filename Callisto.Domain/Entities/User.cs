@@ -1,5 +1,6 @@
 ﻿using Callisto.Domain.Enums;
 using Callisto.Domain.Value_Objects;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,6 +24,7 @@ namespace Callisto.Domain.Entities
             PasswordHash = passwordHash;
             Phone = phone;
             CompanyId = companyId;
+            TeamId = 2002;
         }
 
         public int Id { get; private set; }
@@ -41,5 +43,10 @@ namespace Callisto.Domain.Entities
         public DateTime? LastLogin { get; private set; }
         public IReadOnlyCollection<Ticket> Tickets { get { return _tickets.ToArray(); } }
         public IDictionary<string, string> Notifications { get; private set; }
+
+        public void SetPasswordHash(string Hash)
+        {
+            PasswordHash = Hash;
+        }
     }
 }
