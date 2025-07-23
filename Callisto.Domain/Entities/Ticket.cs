@@ -9,8 +9,9 @@ namespace Callisto.Domain.Entities
 {
     public class Ticket
     {
-        public Ticket(int companyId, int teamId, string title, string description, ETicketPriority priority)
+        public Ticket(int companyId, int teamId, int userId, string title, string description, ETicketPriority priority)
         {
+            UserId = userId;
             CompanyId = companyId;
             TeamId = teamId;
             Title = title;
@@ -37,5 +38,62 @@ namespace Callisto.Domain.Entities
         public DateTime CreationDate { get; private set; }
         public DateTime? UpdateDate { get; private set; }
         public DateTime? ResolutionDate { get; private set; }
+
+        public void ChangeTeam(int teamId)
+        {
+            TeamId = teamId;
+            UpdateDate = DateTime.UtcNow;
+        }
+
+        public void AssignTo(int userId)
+        {
+            UserId = userId;
+            UpdateDate = DateTime.UtcNow;
+        }
+
+        public void ChangeTitle(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title) || title.Length < 5)
+                throw new ArgumentException("O título deve ter no mínimo 5 caracteres.");
+
+            Title = title;
+            UpdateDate = DateTime.UtcNow;
+        }
+
+        public void ChangeDescription(string description)
+        {
+            if (string.IsNullOrWhiteSpace(description) || description.Length < 10)
+                throw new ArgumentException("A descrição deve ter no mínimo 10 caracteres.");
+
+            Description = description;
+            UpdateDate = DateTime.UtcNow;
+        }
+
+        public void ChangePriority(ETicketPriority priority)
+        {
+            if (!Enum.IsDefined(typeof(ETicketPriority), priority))
+                throw new ArgumentException("Prioridade inválida.");
+
+            Priority = priority;
+            UpdateDate = DateTime.UtcNow;
+        }
+
+        public void ChangeStatus(ETicketStatus status)
+        {
+            if (!Enum.IsDefined(typeof(ETicketStatus), status))
+                throw new ArgumentException("Status inválido.");
+
+            Status = status;
+            UpdateDate = DateTime.UtcNow;
+        }
+
+        public void SetResolutionDate(DateTime date)
+        {
+            if (date < DateTime.UtcNow.AddYears(-10))
+                throw new ArgumentException("Data de resolução inválida.");
+
+            ResolutionDate = date;
+            UpdateDate = DateTime.UtcNow;
+        }
     }
 }
