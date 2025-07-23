@@ -9,7 +9,6 @@ namespace Callisto.Domain.Commands
     {
         public int Id { get; set; } 
         public int? TeamId { get; set; }
-        public int? AssignedToId { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public ETicketPriority? Priority { get; set; }

@@ -21,6 +21,9 @@ builder.Services.AddScoped<CompanyHandler, CompanyHandler>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<TeamHandler, TeamHandler>();
 
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<TicketHandler, TicketHandler>();
+
 builder.Services.AddDbContext<CallistoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("CallistoConnection"));

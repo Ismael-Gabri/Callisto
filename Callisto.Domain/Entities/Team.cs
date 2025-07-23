@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Callisto.Domain.Entities
@@ -19,6 +20,7 @@ namespace Callisto.Domain.Entities
         public int Id { get; private set; }
         public string Name { get; private set; }
         public bool IsActive { get; private set; }
+        [JsonIgnore]
         public List<User>? Users { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
