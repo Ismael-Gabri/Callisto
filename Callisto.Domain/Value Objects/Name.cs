@@ -60,5 +60,9 @@ namespace Callisto.Domain.Value_Objects
 
             LastName = newLastName;
         }
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }

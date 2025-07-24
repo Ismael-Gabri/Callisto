@@ -2,6 +2,7 @@
 using Callisto.Domain.Infra.Contexts;
 using Callisto.Domain.Infra.Repositories;
 using Callisto.Domain.Repositories;
+using Callisto.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+
+builder.Services.AddTransient<TokenService>();
 
 builder.Services.AddScoped<CallistoContext, CallistoContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
