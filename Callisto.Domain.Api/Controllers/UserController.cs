@@ -48,7 +48,7 @@ namespace Callisto.Domain.Api.Controllers
             return new
             {
                 user = user,
-                token = token,
+                token = token, //
             };
         }
 
