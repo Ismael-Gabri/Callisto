@@ -12,13 +12,13 @@
 
 ### Ajustes e melhorias
 
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas para as seguintes tarefas:
+The project is still under development, and the next updates will focus on the following tasks:
 
-- [x] Tarefa 1
-- [x] Tarefa 2
-- [x] Tarefa 3
-- [ ] Tarefa 4
-- [ ] Tarefa 5
+- [x] Tarefa 1 - JWT authentication and authorization
+- [x] Tarefa 2 - Standardization of endpoint responses
+- [x] Tarefa 3 - Password encryption in the database using HChm256
+- [ ] Tarefa 4 - Add images to tickets using base64
+- [ ] Tarefa 5 - Add comments to tickets
 
 ## 💻 Pré-requisitos
 
