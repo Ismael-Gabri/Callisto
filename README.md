@@ -8,7 +8,7 @@
 
 <img src="imagem.png" alt="Exemplo imagem">
 
-> Linha adicional de texto informativo sobre o que o projeto faz. Sua introdução deve ter cerca de 2 ou 3 linhas. Não exagere, as pessoas não vão ler.
+> A robust ticket management platform built for IT teams and developers. It streamlines issue tracking, enhances collaboration, and accelerates resolution workflows.
 
 ### Ajustes e melhorias
 
