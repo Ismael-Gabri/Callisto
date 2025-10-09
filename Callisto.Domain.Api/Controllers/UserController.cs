@@ -45,10 +45,11 @@ namespace Callisto.Domain.Api.Controllers
                 return BadRequest(new { message = "Senha inválida" });
 
             var token = TokenService.Generate(user);
+
             return new
             {
                 user = user,
-                token = token, //
+                token = token, 
             };
         }
 

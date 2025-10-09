@@ -32,7 +32,21 @@ builder.Services.AddDbContext<CallistoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CallistoConnection"));
 });
 
+//Liberar Angular
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // endereço do seu frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowAngular");
 
 // Configuração do Swagger
 if (app.Environment.IsDevelopment())
