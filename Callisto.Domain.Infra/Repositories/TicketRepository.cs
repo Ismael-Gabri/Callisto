@@ -1,6 +1,7 @@
 ﻿using Callisto.Domain.Entities;
 using Callisto.Domain.Infra.Contexts;
 using Callisto.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,11 @@ namespace Callisto.Domain.Infra.Repositories
 
         public List<Ticket> GetAllTickets()
         {
-            return _context.Tickets.ToList();
+            return _context.Tickets
+        .Include(t => t.User)      // carrega o usuário
+        .Include(t => t.Team)      // carrega o time, se quiser
+        .Include(t => t.Company)   // carrega a empresa, se quiser
+        .ToList();
         }
 
         public Ticket GetTicketById(int ticketId)
