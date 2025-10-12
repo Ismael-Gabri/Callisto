@@ -42,6 +42,8 @@ namespace Callisto.Domain.Services
                 new Claim(ClaimTypes.Name, user.Name.ToString()));
             ci.AddClaim(
                 new Claim(ClaimTypes.Role, user.Role.ToString()));
+             ci.AddClaim(
+                new Claim("userId", user.Id.ToString()));
 
             return ci;
         }

@@ -4,6 +4,8 @@ using Callisto.Domain.Infra.Repositories;
 using Callisto.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Callisto.Domain.Api.Controllers
 {
@@ -20,10 +22,17 @@ namespace Callisto.Domain.Api.Controllers
         }
 
         [HttpPost("/ticket")]
-        [AllowAnonymous]
+        [Authorize]
         public object Post([FromBody] CreateTicketCommand command)
         {
-            return _ticketHandler.Handler(command);
+            var userIdClaim2 = User.FindFirst("userId")?.Value;
+            int userId = 0;
+
+            if (!string.IsNullOrEmpty(userIdClaim2))
+            {
+                int.TryParse(userIdClaim2, out userId);
+            }
+            return _ticketHandler.Handler(command, userId);
         }
 
         [HttpGet("/ticket")]

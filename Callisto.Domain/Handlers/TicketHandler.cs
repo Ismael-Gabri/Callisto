@@ -28,13 +28,15 @@ namespace Callisto.Domain.Handlers
         }
         public Dictionary<string, string> Notifications { get; set; }
 
-        public ICommandResult Handler(CreateTicketCommand command)
+        public ICommandResult Handler(CreateTicketCommand command, int userId)
         {
             if (!command.Validate())
                 Notifications.Add("Command Validation", "Something is Wrong");
 
             //Recuperar e validar o User
-            var user = _userRepository.GetUserById(command.UserId);
+            var user = _userRepository.GetUserById(userId);
+
+
 
             //Recuperar e validar o team
             var team = _teamRepository.GetTeamById(user.TeamId);
@@ -80,6 +82,11 @@ namespace Callisto.Domain.Handlers
             _repository.SaveChanges();
 
             return new CommandResult<Ticket>("Ticket atualizado com sucesso!", ticket);
+        }
+
+        public ICommandResult Handler(CreateTicketCommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }
