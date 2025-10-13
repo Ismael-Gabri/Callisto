@@ -16,9 +16,16 @@ namespace Callisto.Domain.Api.Controllers
 
         [HttpGet("/kpi")]
         [AllowAnonymous]
-        public Task<int> GetKpiValues()
+        public Task<int> GetKpiValue()
         {
             return _repository.OpenTicketstotal();
+        }
+
+        [HttpGet("/v2/kpi")]
+        [AllowAnonymous]
+        public Task<Dictionary<int, int>> GetKpiValues()
+        {
+            return _repository.GetTicketsCountByStatusAsync();
         }
     }
 }

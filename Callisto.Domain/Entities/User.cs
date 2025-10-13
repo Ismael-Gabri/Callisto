@@ -24,7 +24,7 @@ namespace Callisto.Domain.Entities
             PasswordHash = passwordHash;
             Phone = phone;
             CompanyId = companyId;
-            TeamId = 2002;
+            TeamId = 1;
         }
 
         public int Id { get; private set; }

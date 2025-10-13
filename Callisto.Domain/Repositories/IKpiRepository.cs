@@ -9,5 +9,6 @@ namespace Callisto.Domain.Repositories
     public interface IKpiRepository
     {
         Task<int> OpenTicketstotal();
+        public Task<Dictionary<int, int>> GetTicketsCountByStatusAsync();
     }
 }
