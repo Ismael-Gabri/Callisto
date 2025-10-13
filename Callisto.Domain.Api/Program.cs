@@ -19,6 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<TokenService>();
 
 builder.Services.AddScoped<CallistoContext, CallistoContext>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserHandler, UserHandler>();
 
@@ -30,6 +31,8 @@ builder.Services.AddScoped<TeamHandler, TeamHandler>();
 
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<TicketHandler, TicketHandler>();
+
+builder.Services.AddScoped<IKpiRepository, KpiRepository>();
 
 builder.Services.AddDbContext<CallistoContext>(options =>
 {
