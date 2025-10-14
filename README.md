@@ -14,11 +14,11 @@
 
 The project is still under development, and the next updates will focus on the following tasks:
 
-- [x] Tarefa 1 - JWT authentication and authorization
-- [x] Tarefa 2 - Standardization of endpoint responses
-- [x] Tarefa 3 - Password encryption in the database using HChm256
-- [ ] Tarefa 4 - Add images to tickets using base64
-- [ ] Tarefa 5 - Add comments to tickets
+- [x] Task 1 - JWT authentication and authorization;
+- [x] Task 2 - Standardization of endpoint responses;
+- [x] Task 3 - Password encryption in the database using HChm256;
+- [x] Task 4 - Link with front-end project;
+- [ ] Task 5 - Add comments to tickets;
 
 
 ## 📝 Licença
