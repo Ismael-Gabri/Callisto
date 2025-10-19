@@ -27,9 +27,14 @@ namespace Callisto.Domain.Infra.Repositories
         .ToList();
         }
 
+        //public Ticket GetTicketById(int ticketId)
+        //{
+        //    return _context.Tickets.FirstOrDefault(u => u.Id == ticketId);
+        //}
+
         public Ticket GetTicketById(int ticketId)
         {
-            return _context.Tickets.FirstOrDefault(u => u.Id == ticketId);
+            return _context.Tickets.Include(t => t.User).Include(t => t.Comments).FirstOrDefault(u => u.Id == ticketId);
         }
 
         public void Save(Ticket ticket)

@@ -34,6 +34,9 @@ builder.Services.AddScoped<TicketHandler, TicketHandler>();
 
 builder.Services.AddScoped<IKpiRepository, KpiRepository>();
 
+builder.Services.AddScoped<ITicketCommentRepository, TicketCommentRespository>();
+
+
 builder.Services.AddDbContext<CallistoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("CallistoConnection"));

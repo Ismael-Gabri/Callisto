@@ -39,6 +39,15 @@ namespace Callisto.Domain.Entities
         public DateTime? UpdateDate { get; private set; }
         public DateTime? ResolutionDate { get; private set; }
 
+        private readonly List<TicketComment> _comments = new();
+        public IReadOnlyCollection<TicketComment> Comments => _comments.AsReadOnly();
+
+        public void AddComment(TicketComment comment)
+        {
+            _comments.Add(comment);
+            UpdateDate = DateTime.UtcNow;
+        }
+
         public void ChangeTeam(int teamId)
         {
             TeamId = teamId;

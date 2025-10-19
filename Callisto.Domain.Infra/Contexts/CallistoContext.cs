@@ -12,6 +12,8 @@ namespace Callisto.Domain.Infra.Contexts
         public DbSet<Team> Teams { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketComment> TicketComments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -236,6 +238,37 @@ namespace Callisto.Domain.Infra.Contexts
                     .HasColumnName("ResolutionDate")
                     .HasColumnType("datetime2");
             });
+
+            modelBuilder.Entity<TicketComment>(entity =>
+            {
+                entity.ToTable("TicketComments");
+
+                entity.HasKey(c => c.Id);
+
+                // FK para Ticket
+                entity.HasOne(c => c.Ticket)
+                    .WithMany(t => t.Comments)
+                    .HasForeignKey(c => c.TicketId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // FK para User (quem fez o comentário)
+                entity.HasOne(c => c.User)
+                    .WithMany()
+                    .HasForeignKey(c => c.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // Propriedades simples
+                entity.Property(c => c.Comment)
+                    .HasColumnName("Comment")
+                    .HasColumnType("varchar(max)")
+                    .IsRequired();
+
+                entity.Property(c => c.CreatedAt)
+                    .HasColumnName("CreatedAt")
+                    .HasColumnType("datetime2");
+            });
+
+
         }
     }
 }
