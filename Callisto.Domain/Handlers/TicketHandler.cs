@@ -37,10 +37,8 @@ namespace Callisto.Domain.Handlers
             //Recuperar e validar o User
             var user = _userRepository.GetUserById(userId);
 
-
-
             //Recuperar e validar o team
-            var team = _teamRepository.GetTeamById(user.TeamId);
+            var team = _teamRepository.GetTeamById(command.Team);
 
             //Recuperar e validar o company
             var company = _companyRepository.GetCompanyById(user.CompanyId);

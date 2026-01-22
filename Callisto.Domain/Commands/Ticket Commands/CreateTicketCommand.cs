@@ -10,15 +10,17 @@ namespace Callisto.Domain.Commands
     {
         public CreateTicketCommand() { }
 
-        public CreateTicketCommand(int userId, string title, string description, ETicketPriority priority)
+        public CreateTicketCommand(int userId, string title, string description, ETicketPriority priority, int team)
         {
             Title = title;
             Description = description;
             Priority = priority;
             UserId = userId;
+            Team = team;
         }
 
         public int UserId { get; set; }
+        public int Team { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public ETicketPriority Priority { get; set; }

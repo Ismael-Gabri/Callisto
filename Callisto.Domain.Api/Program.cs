@@ -75,6 +75,9 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+Console.WriteLine("CS = " +
+    builder.Configuration.GetConnectionString("CallistoConnection"));
+
 app.UseCors("AllowAngular");
 
 // Configuração do Swagger
