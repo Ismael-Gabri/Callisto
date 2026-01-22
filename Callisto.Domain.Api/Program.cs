@@ -48,9 +48,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngular",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200") // endereço do seu frontend
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy.WithOrigins(
+                "http://localhost:7230",       // para desenvolvimento
+                "http://ismaeldev.cloud"       // para produção
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 });
 
