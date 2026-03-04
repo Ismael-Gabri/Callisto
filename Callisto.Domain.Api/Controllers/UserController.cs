@@ -32,6 +32,9 @@ namespace Callisto.Domain.Api.Controllers
         [FromServices] CallistoContext context,
         [FromBody] LoginCommand model)
         {
+            if (!model.Validate())
+                return BadRequest(new { message = "Dados de login inválidos" });
+
             var users = _userRepository.GetAllUsers();
 
             var user = users.FirstOrDefault(x => x.Email.Address == model.Email);

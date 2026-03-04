@@ -21,6 +21,7 @@ namespace Callisto.Domain.Handlers
         public UserHandler(IUserRepository repository)
         {
             _repository = repository;
+            Notifications = new Dictionary<string, string>();
         }
         public Dictionary<string, string> Notifications { get; set; }
         public ICommandResult Handler(GetUserCommand command)
@@ -32,15 +33,15 @@ namespace Callisto.Domain.Handlers
         public ICommandResult Handler(CreateUserCommand command)
         {
             if (!command.Validate())
-                Notifications.Add("Command Validation", "Something is Wrong");
+                return new CommandResult<Dictionary<string, string>>("Dados de cadastro inválidos", command.Notifications);
 
             //Criar VOs
             var name = new Name(command.FirstName, command.LastName);
             var email = new Email(command.Email);
             var phone = new Phone(command.Phone);
 
-            if (name.Notifications.Count > 0 && email.Notifications.Count > 0)
-                Notifications.Add("Name or Email", "Incorrect format");
+            if (name.Notifications.Count > 0 || email.Notifications.Count > 0)
+                return new CommandResult<string>("Nome ou e-mail em formato inválido", string.Empty);
 
             var user = new User(name, email, command.PasswordHash, phone, command.CompanyId);
 
