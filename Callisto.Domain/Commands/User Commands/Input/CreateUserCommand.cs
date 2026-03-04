@@ -1,11 +1,7 @@
-﻿using Callisto.Domain.Commands.Contracts;
-using System;
-using System.Collections.Generic;
+using Callisto.Domain.Commands.Contracts;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Callisto.Domain.Commands
 {
@@ -23,35 +19,59 @@ namespace Callisto.Domain.Commands
             CompanyId = companyId;
         }
 
+        [Required(ErrorMessage = "Nome é obrigatório")]
+        [MinLength(3, ErrorMessage = "O nome deve conter no mínimo 3 caracteres")]
+        [MaxLength(20, ErrorMessage = "O nome deve conter no máximo 20 caracteres")]
+        [RegularExpression(@"^[^0-9]+$", ErrorMessage = "O nome não deve conter números")]
         public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Sobrenome é obrigatório")]
+        [MinLength(3, ErrorMessage = "O sobrenome deve conter no mínimo 3 caracteres")]
+        [MaxLength(20, ErrorMessage = "O sobrenome deve conter no máximo 20 caracteres")]
+        [RegularExpression(@"^[^0-9]+$", ErrorMessage = "O sobrenome não deve conter números")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "E-mail é obrigatório")]
+        [EmailAddress(ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Senha é obrigatória")]
+        [MinLength(6, ErrorMessage = "A senha deve conter pelo menos 6 caracteres")]
         public string PasswordHash { get; set; }
+
+        [Required(ErrorMessage = "Telefone é obrigatório")]
         public string Phone { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "CompanyId inválido")]
         public int CompanyId { get; set; }
+
         public Dictionary<string, string> Notifications { get; private set; } = new();
 
         public bool Validate()
         {
-            if (FirstName.Length < 3)
-                Notifications.Add("FirstName", "O nome deve conter mais que 3 characteres");
-            if (FirstName.Length > 20)
-                Notifications.Add("FirstName", "O nome deve conter menos que 20 characteres");
-            if (LastName.Length < 3)
-                Notifications.Add("LastName", "O sobrenome deve conter mais que 3 characteres");
-            if (LastName.Length > 20)
-                Notifications.Add("LastName", "O sobrenome deve conter menos que 20 characteres");
-            if (FirstName.Any(char.IsDigit))
-                Notifications.Add("FirstName", "O nome não deve conter números");
-            if (LastName.Any(char.IsDigit))
-                Notifications.Add("LastName", "O sobrenome não deve conter números");
+            Notifications.Clear();
+
+            if (string.IsNullOrWhiteSpace(FirstName) || FirstName.Length < 3 || FirstName.Length > 20 || FirstName.Any(char.IsDigit))
+                Notifications["FirstName"] = "Nome inválido";
+
+            if (string.IsNullOrWhiteSpace(LastName) || LastName.Length < 3 || LastName.Length > 20 || LastName.Any(char.IsDigit))
+                Notifications["LastName"] = "Sobrenome inválido";
+
             if (!IsValidEmail(Email))
-                Notifications.Add("Email", "E-mail inválido");
-            if (Notifications.Count > 0)
-                return false;
-            else
-                return true;
+                Notifications["Email"] = "E-mail inválido";
+
+            if (string.IsNullOrWhiteSpace(PasswordHash) || PasswordHash.Length < 6)
+                Notifications["PasswordHash"] = "Senha inválida";
+
+            if (string.IsNullOrWhiteSpace(Phone))
+                Notifications["Phone"] = "Telefone obrigatório";
+
+            if (CompanyId <= 0)
+                Notifications["CompanyId"] = "CompanyId inválido";
+
+            return Notifications.Count == 0;
         }
+
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -59,27 +79,21 @@ namespace Callisto.Domain.Commands
 
             try
             {
-                // Normalize the domain
                 email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
                                       RegexOptions.None, TimeSpan.FromMilliseconds(200));
 
-                // Examines the domain part of the email and normalizes it.
                 string DomainMapper(Match match)
                 {
-                    // Use IdnMapping class to convert Unicode domain names.
                     var idn = new IdnMapping();
-
-                    // Pull out and process domain name (throws ArgumentException on invalid)
                     string domainName = idn.GetAscii(match.Groups[2].Value);
-
                     return match.Groups[1].Value + domainName;
                 }
             }
-            catch (RegexMatchTimeoutException e)
+            catch (RegexMatchTimeoutException)
             {
                 return false;
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 return false;
             }
