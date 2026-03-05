@@ -7,10 +7,6 @@ using Callisto.Domain.Handlers.Contracts;
 using Callisto.Domain.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Callisto.Domain.Handlers
 {
@@ -26,6 +22,7 @@ namespace Callisto.Domain.Handlers
             _userRepository = userRepository;
             _teamRepository = teamRepository;
             _companyRepository = companyRepository;
+            Notifications = new Dictionary<string, string>();
         }
         public Dictionary<string, string> Notifications { get; set; }
 
@@ -34,17 +31,26 @@ namespace Callisto.Domain.Handlers
             if (!command.Validate())
                 Notifications.Add("Command Validation", "Something is Wrong");
 
-            //Recuperar e validar o User
             var user = _userRepository.GetUserById(userId);
-
-            //Recuperar e validar o team
             var team = _teamRepository.GetTeamById(command.Team);
-
-            //Recuperar e validar o company
             var company = _companyRepository.GetCompanyById(user.CompanyId);
 
-            //Criar Ticket
-            var ticket = new Ticket(company.Id, team.Id, user.Id, command.Title, command.Description, command.Priority);
+            if (command.TechnicianId.HasValue)
+            {
+                var technician = _userRepository.GetUserById(command.TechnicianId.Value);
+
+                if (technician == null || technician.TeamId != team.Id)
+                    return new CommandResult<string>("Erro", "Técnico inválido para este time.");
+            }
+
+            var ticket = new Ticket(
+                company.Id,
+                team.Id,
+                user.Id,
+                command.Title,
+                command.Description,
+                command.Priority,
+                command.TechnicianId);
 
             _repository.Save(ticket);
             _repository.SaveChanges();
@@ -54,13 +60,23 @@ namespace Callisto.Domain.Handlers
 
         public ICommandResult Handler(UpdateTicketCommand command)
         {
-            if (!command.Validate()) //Verificar Validação
+            if (!command.Validate())
                 Notifications.Add("Command Validation", "Something is Wrong");
 
             var ticket = _repository.GetTicketById(command.Id);
 
             if (command.TeamId.HasValue)
                 ticket.ChangeTeam(command.TeamId.Value);
+
+            if (command.TechnicianId.HasValue)
+            {
+                var technician = _userRepository.GetUserById(command.TechnicianId.Value);
+
+                if (technician == null || technician.TeamId != ticket.TeamId)
+                    return new CommandResult<string>("Erro", "Técnico inválido para este time.");
+
+                ticket.AssignTechnician(command.TechnicianId.Value);
+            }
 
             if (!string.IsNullOrWhiteSpace(command.Title))
                 ticket.ChangeTitle(command.Title);
