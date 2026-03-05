@@ -9,6 +9,8 @@ namespace Callisto.Domain.Entities
 {
     public class Ticket
     {
+        private Ticket() { }
+
         public Ticket(int companyId, int teamId, int userId, string title, string description, ETicketPriority priority)
         {
             UserId = userId;
@@ -28,6 +30,8 @@ namespace Callisto.Domain.Entities
         public Team Team { get; private set; }
         public int UserId { get; private set; }
         public User User { get; private set; }
+        public int? TechnicianId { get; private set; }
+        public User? Technician { get; private set; }
 
         public string Title { get; private set; }
         public string Description { get; private set; }
@@ -54,9 +58,9 @@ namespace Callisto.Domain.Entities
             UpdateDate = DateTime.UtcNow;
         }
 
-        public void AssignTo(int userId)
+        public void AssignTo(int technicianId)
         {
-            UserId = userId;
+            TechnicianId = technicianId;
             UpdateDate = DateTime.UtcNow;
         }
 

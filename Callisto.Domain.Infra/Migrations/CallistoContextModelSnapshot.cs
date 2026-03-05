@@ -129,6 +129,10 @@ namespace Callisto.Domain.Infra.Migrations
                         .HasColumnType("int")
                         .HasColumnName("TeamId");
 
+                    b.Property<int?>("TechnicianId")
+                        .HasColumnType("int")
+                        .HasColumnName("TechnicianId");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("varchar(200)")
@@ -150,6 +154,8 @@ namespace Callisto.Domain.Infra.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("TeamId");
+
+                    b.HasIndex("TechnicianId");
 
                     b.HasIndex("UserId");
 
@@ -252,6 +258,11 @@ namespace Callisto.Domain.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Callisto.Domain.Entities.User", "Technician")
+                        .WithMany()
+                        .HasForeignKey("TechnicianId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Callisto.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -265,6 +276,8 @@ namespace Callisto.Domain.Infra.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("Team");
+
+                    b.Navigation("Technician");
 
                     b.Navigation("User");
                 });
