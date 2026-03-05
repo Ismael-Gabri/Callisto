@@ -10,17 +10,19 @@ namespace Callisto.Domain.Commands
     {
         public CreateTicketCommand() { }
 
-        public CreateTicketCommand(int userId, string title, string description, ETicketPriority priority, int team)
+        public CreateTicketCommand(int userId, string title, string description, ETicketPriority priority, int team, int? technicianId = null)
         {
             Title = title;
             Description = description;
             Priority = priority;
             UserId = userId;
             Team = team;
+            TechnicianId = technicianId;
         }
 
         public int UserId { get; set; }
         public int Team { get; set; }
+        public int? TechnicianId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public ETicketPriority Priority { get; set; }
@@ -36,6 +38,9 @@ namespace Callisto.Domain.Commands
 
             if (string.IsNullOrWhiteSpace(Description) || Description.Length < 10)
                 Notifications.TryAdd("Description", "A descrição deve conter pelo menos 10 caracteres");
+
+            if (TechnicianId.HasValue && TechnicianId.Value <= 0)
+                Notifications.TryAdd("TechnicianId", "Técnico inválido");
 
             return Notifications.Count == 0;
         }

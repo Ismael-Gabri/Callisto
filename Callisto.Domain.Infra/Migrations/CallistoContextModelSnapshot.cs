@@ -100,6 +100,10 @@ namespace Callisto.Domain.Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AssignedTechnicianId")
+                        .HasColumnType("int")
+                        .HasColumnName("AssignedTechnicianId");
+
                     b.Property<int>("CompanyId")
                         .HasColumnType("int")
                         .HasColumnName("CompanyId");
@@ -146,6 +150,8 @@ namespace Callisto.Domain.Infra.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssignedTechnicianId");
 
                     b.HasIndex("CompanyId");
 
@@ -240,6 +246,11 @@ namespace Callisto.Domain.Infra.Migrations
 
             modelBuilder.Entity("Callisto.Domain.Entities.Ticket", b =>
                 {
+                    b.HasOne("Callisto.Domain.Entities.User", "AssignedTechnician")
+                        .WithMany()
+                        .HasForeignKey("AssignedTechnicianId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Callisto.Domain.Entities.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
@@ -261,6 +272,8 @@ namespace Callisto.Domain.Infra.Migrations
                     b.HasOne("Callisto.Domain.Entities.User", null)
                         .WithMany("Tickets")
                         .HasForeignKey("UserId1");
+
+                    b.Navigation("AssignedTechnician");
 
                     b.Navigation("Company");
 
