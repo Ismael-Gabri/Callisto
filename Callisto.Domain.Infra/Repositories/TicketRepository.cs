@@ -22,6 +22,7 @@ namespace Callisto.Domain.Infra.Repositories
         {
             return _context.Tickets
         .Include(t => t.User)      // carrega o usuário
+        .Include(t => t.AssignedTechnician)
         .Include(t => t.Team)      // carrega o time, se quiser
         .Include(t => t.Company)   // carrega a empresa, se quiser
         .ToList();
@@ -34,7 +35,7 @@ namespace Callisto.Domain.Infra.Repositories
 
         public Ticket GetTicketById(int ticketId)
         {
-            return _context.Tickets.Include(t => t.User).Include(t => t.Comments).FirstOrDefault(u => u.Id == ticketId);
+            return _context.Tickets.Include(t => t.User).Include(t => t.AssignedTechnician).Include(t => t.Comments).FirstOrDefault(u => u.Id == ticketId);
         }
 
         public void Save(Ticket ticket)

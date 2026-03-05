@@ -9,6 +9,7 @@ namespace Callisto.Domain.Commands
     {
         public int Id { get; set; } 
         public int? TeamId { get; set; }
+        public int? TechnicianId { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public ETicketPriority? Priority { get; set; }
@@ -28,6 +29,9 @@ namespace Callisto.Domain.Commands
 
             if (Description != null && Description.Length < 10)
                 Notifications.Add("Description", "A descrição deve conter pelo menos 10 caracteres");
+
+            if (TechnicianId.HasValue && TechnicianId.Value <= 0)
+                Notifications.Add("TechnicianId", "Técnico inválido");
 
             if (Priority.HasValue && !Enum.IsDefined(typeof(ETicketPriority), Priority.Value))
                 Notifications.Add("Priority", "Prioridade inválida");
