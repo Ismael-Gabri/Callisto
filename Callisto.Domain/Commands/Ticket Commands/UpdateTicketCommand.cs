@@ -13,6 +13,7 @@ namespace Callisto.Domain.Commands
         public string? Description { get; set; }
         public ETicketPriority? Priority { get; set; }
         public ETicketStatus? Status { get; set; }
+        public int? TechnicianId { get; set; }
         public DateTime? ResolutionDate { get; set; }
         public Dictionary<string, string> Notifications { get; private set; } = new();
 

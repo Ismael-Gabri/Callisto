@@ -46,6 +46,16 @@ namespace Callisto.Domain.Handlers
             //Criar Ticket
             var ticket = new Ticket(company.Id, team.Id, user.Id, command.Title, command.Description, command.Priority);
 
+            if (command.TechnicianId.HasValue)
+            {
+                var technician = _userRepository.GetUserById(command.TechnicianId.Value);
+
+                if (technician == null)
+                    throw new ArgumentException("Técnico informado não foi encontrado.");
+
+                ticket.AssignTo(technician.Id);
+            }
+
             _repository.Save(ticket);
             _repository.SaveChanges();
 
@@ -73,6 +83,16 @@ namespace Callisto.Domain.Handlers
 
             if (command.Status.HasValue)
                 ticket.ChangeStatus(command.Status.Value);
+
+            if (command.TechnicianId.HasValue)
+            {
+                var technician = _userRepository.GetUserById(command.TechnicianId.Value);
+
+                if (technician == null)
+                    throw new ArgumentException("Técnico informado não foi encontrado.");
+
+                ticket.AssignTo(technician.Id);
+            }
 
             if (command.ResolutionDate.HasValue)
                 ticket.SetResolutionDate(command.ResolutionDate.Value);

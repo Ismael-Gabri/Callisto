@@ -189,6 +189,11 @@ namespace Callisto.Domain.Infra.Contexts
                     .HasColumnType("int")
                     .IsRequired();
 
+                entity.Property(t => t.TechnicianId)
+                    .HasColumnName("TechnicianId")
+                    .HasColumnType("int")
+                    .IsRequired(false);
+
                 entity.HasOne(t => t.Company)
                     .WithMany()
                     .HasForeignKey(t => t.CompanyId)
@@ -203,6 +208,12 @@ namespace Callisto.Domain.Infra.Contexts
                     .WithMany()
                     .HasForeignKey(t => t.UserId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.Technician)
+                    .WithMany()
+                    .HasForeignKey(t => t.TechnicianId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired(false);
 
                 // Propriedades simples
                 entity.Property(t => t.Title)
