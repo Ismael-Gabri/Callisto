@@ -50,7 +50,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(
                 "http://localhost:7230",       // para desenvolvimento
-                "http://ismaeldev.cloud"       // para produção
+                "http://ismaeldev.cloud",       // para produção
+                "http://localhost:4200"
             )
             .AllowAnyHeader()
             .AllowAnyMethod();
