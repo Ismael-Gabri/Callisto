@@ -79,6 +79,10 @@ namespace Callisto.Domain.Handlers
             if (command.Phone?.CellPhone != null)
                 user.ChangePhone(command.Phone.CellPhone);
 
+            if (!string.IsNullOrWhiteSpace(command.ProfileImage))
+                user.ChangeProfileImage(command.ProfileImage);
+
+
 
             _repository.Update(user);
             _repository.SaveChanges();

@@ -83,5 +83,11 @@ namespace Callisto.Domain.Entities
         {
             Phone = new Phone(phone);
         }
+
+        public void ChangeProfileImage(string? base64)
+        {
+            ProfileImage = base64;
+        }
+
     }
 }
