@@ -28,8 +28,8 @@ Here you can list the main routes of your API, and what are their expected reque
 ​
 | route               | description                                          
 |----------------------|-----------------------------------------------------
-| <kbd>GET /authenticate</kbd>     | retrieves user info see [response details](#get-auth-detail)
-| <kbd>POST /authenticate</kbd>     | authenticate user into the api see [request details](#post-auth-detail)
+| <kbd>GET /user/{id}</kbd>     | retrieves user info see [response details](#get-auth-detail)
+| <kbd>POST /login</kbd>     | authenticate user into the api see [request details](#post-auth-detail)
 
 <h3 id="get-auth-detail">GET /authenticate</h3>
 
