@@ -1,4 +1,5 @@
 ﻿using Callisto.Domain.Commands;
+using Callisto.Domain.Enums.Ticket;
 using Callisto.Domain.Handlers;
 using Callisto.Domain.Infra.Repositories;
 using Callisto.Domain.Repositories;
@@ -57,10 +58,24 @@ namespace Callisto.Domain.Api.Controllers
             return true;
         }
 
-        [HttpPut("/ticket")]
+        [HttpPut("/ticket/assign")]
         [AllowAnonymous]
         public object Delete([FromBody] UpdateTicketCommand command)
         {
+            _ticketHandler.Handler(command);
+            return true;
+        }
+
+        [HttpPut("/ticket/{id}/conclude")]
+        [AllowAnonymous]
+        public object Conclude(int id)
+        {
+            var command = new UpdateTicketCommand
+            {
+                Id = id,
+                Status = ETicketStatus.Resolved
+            };
+
             _ticketHandler.Handler(command);
             return true;
         }

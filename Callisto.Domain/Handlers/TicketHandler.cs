@@ -3,6 +3,7 @@ using Callisto.Domain.Commands.Contracts;
 using Callisto.Domain.Commands.Ticket_Commands;
 using Callisto.Domain.Commands.User_Commands.Output;
 using Callisto.Domain.Entities;
+using Callisto.Domain.Enums.Ticket;
 using Callisto.Domain.Handlers.Contracts;
 using Callisto.Domain.Repositories;
 using System;
@@ -82,7 +83,12 @@ namespace Callisto.Domain.Handlers
                 ticket.ChangePriority(command.Priority.Value);
 
             if (command.Status.HasValue)
-                ticket.ChangeStatus(command.Status.Value);
+            {
+                if (command.Status.Value == ETicketStatus.Resolved)
+                    ticket.Conclude();
+                else
+                    ticket.ChangeStatus(command.Status.Value);
+            }
 
             if (command.TechnicianId.HasValue)
             {

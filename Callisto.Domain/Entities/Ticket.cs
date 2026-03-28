@@ -52,6 +52,15 @@ namespace Callisto.Domain.Entities
             UpdateDate = DateTime.UtcNow;
         }
 
+        public void Conclude()
+        {
+            if (Status == ETicketStatus.Resolved)
+                throw new Exception("Ticket já está concluído");
+
+            Status = ETicketStatus.Resolved;
+            ResolutionDate = DateTime.UtcNow;
+        }
+
         public void ChangeTeam(int teamId)
         {
             TeamId = teamId;
@@ -61,6 +70,7 @@ namespace Callisto.Domain.Entities
         public void AssignTo(int technicianId)
         {
             TechnicianId = technicianId;
+            Status = ETicketStatus.InProgress;
             UpdateDate = DateTime.UtcNow;
         }
 

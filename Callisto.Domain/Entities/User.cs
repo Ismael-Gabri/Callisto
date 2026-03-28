@@ -23,8 +23,8 @@ namespace Callisto.Domain.Entities
             Email = email;
             PasswordHash = passwordHash;
             Phone = phone;
-            CompanyId = companyId;
-            TeamId = 1;
+            CompanyId = 5;
+            TeamId = 5;
         }
 
         public int Id { get; private set; }
