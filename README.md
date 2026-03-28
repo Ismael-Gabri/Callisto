@@ -4,12 +4,10 @@
  <a href="#tech">Technologies</a> • 
  <a href="#started">Getting Started</a> • 
   <a href="#routes">API Endpoints</a> •
- <a href="#colab">Collaborators</a> •
- <a href="#contribute">Contribute</a>
 </p>
 
 <p align="center">
-    <b>Simple description of what your project do or how to use it.</b>
+    <b>This project is a ticket management API that allows users to create, track, and manage support requests within an organization. It includes features like user authentication, ticket assignment, status updates, and filtering by priority, team, and technician, helping streamline internal support workflows.</b>
 </p>
 
 <h2 id="technologies">💻 Technologies</h2>
