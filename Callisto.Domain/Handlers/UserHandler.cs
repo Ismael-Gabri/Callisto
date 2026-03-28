@@ -3,6 +3,7 @@ using Callisto.Domain.Commands.Contracts;
 using Callisto.Domain.Commands.User_Commands.Input;
 using Callisto.Domain.Commands.User_Commands.Output;
 using Callisto.Domain.Entities;
+using Callisto.Domain.Enums;
 using Callisto.Domain.Handlers.Contracts;
 using Callisto.Domain.Repositories;
 using Callisto.Domain.Value_Objects;
@@ -61,10 +62,23 @@ namespace Callisto.Domain.Handlers
             var user = _repository.GetUserById(command.Id);
 
             if (!string.IsNullOrWhiteSpace(command.FirstName))
-                user.Name.ChangeFirstName(command.FirstName);
+                user.ChangeFirstName(command.FirstName);
 
             if (!string.IsNullOrWhiteSpace(command.LastName))
-                user.Name.ChangeLastName(command.LastName);
+                user.ChangeLastName(command.LastName);
+
+            if (command.Email?.Address != null)
+                user.ChangeEmail(command.Email.Address);
+
+            if (command.TeamId.HasValue)
+                user.ChangeTeam(command.TeamId.Value);
+
+            if (command.Role.HasValue)
+                user.ChangeRole((ERole)command.Role.Value);
+
+            if (command.Phone?.CellPhone != null)
+                user.ChangePhone(command.Phone.CellPhone);
+
 
             _repository.Update(user);
             _repository.SaveChanges();

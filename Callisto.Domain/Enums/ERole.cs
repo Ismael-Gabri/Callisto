@@ -8,11 +8,8 @@ namespace Callisto.Domain.Enums
 {
     public enum ERole
     {
-        Admin = 0,        
-        Manager = 1,      
-        Developer = 2,   
-        ITSupport = 3,    
-        QA = 4,           
-        Client = 5        
+        Admin = 0,
+        Technician = 1,
+        Client = 2
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Callisto.Domain.Value_Objects
@@ -12,11 +13,12 @@ namespace Callisto.Domain.Value_Objects
         {
             
         }
-        public Phone(string phone)
+        [JsonConstructor]
+        public Phone(string cellPhone)
         {
-            CellPhone = phone;
+            CellPhone = cellPhone;
         }
 
-        public string CellPhone { get; private set; }
+        public string CellPhone { get; set; }
     }
 }

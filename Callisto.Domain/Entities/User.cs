@@ -48,5 +48,40 @@ namespace Callisto.Domain.Entities
         {
             PasswordHash = Hash;
         }
+
+        public void ChangeFirstName(string firstName)
+        {
+            Name.ChangeFirstName(firstName);
+        }
+
+        public void ChangeLastName(string lastName)
+        {
+            Name.ChangeLastName(lastName);
+        }
+
+        public void ChangeEmail(string address)
+        {
+            Email = new Email(address);
+        }
+
+        public void ChangeTeam(int teamId)
+        {
+            TeamId = teamId;
+        }
+
+        public void ChangeRole(ERole role)
+        {
+            Role = role;
+        }
+
+        public void SetUpdateDate(DateTime date)
+        {
+            UpdateDate = date;
+        }
+
+        public void ChangePhone(string phone)
+        {
+            Phone = new Phone(phone);
+        }
     }
 }

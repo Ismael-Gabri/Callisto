@@ -13,11 +13,12 @@ namespace Callisto.Domain.Commands
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public int? CompanyId { get; private set; }
-        public int? TeamId { get; private set; }
-        public Email? Email { get; private set; }
-        public Phone? Phone { get; private set; }
-        public string? ProfileImage { get; private set; }
+        public int? CompanyId { get; set; }
+        public int? TeamId { get; set; }
+        public int? Role { get; set; }
+        public Email? Email { get; set; }
+        public Phone? Phone { get; set; }
+        public string? ProfileImage { get; set; }
 
         public bool Validate()
         {
