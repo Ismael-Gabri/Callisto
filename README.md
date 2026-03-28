@@ -12,48 +12,15 @@
 
 <h2 id="technologies">💻 Technologies</h2>
 
-- list of all technologies you used
-- Java
-- MongoDB
-- NodeJS
-
-<h2 id="started">🚀 Getting started</h2>
-
-Here you describe how to run your project locally
-
-<h3>Prerequisites</h3>
-
-Here you list all prerequisites necessary for running your project. For example:
-
-- [NodeJS](https://github.com/)
-- [Git 2](https://github.com)
-
-<h3>Cloning</h3>
-
-How to clone your project
-
-```bash
-git clone your-project-url-in-github
-```
-
-<h3>Config .env variables</h2>
-
-Use the `.env.example` as reference to create your configuration file `.env` with your AWS Credentials
-
-```yaml
-NODE_AWS_REGION=us-east-1
-NODE_AWS_KEY_ID={YOUR_AWS_KEY_ID}
-NODE_AWS_SECRET={YOUR_AWS_SECRET}
-```
-
-<h3>Starting</h3>
-
-How to start your project
-
-```bash
-cd project-name
-npm some-command-to-run
-```
+- C#
+- .NET
+- ASP.NET
+- REST API
+- SQL Server
+- Swagger
+- Docker
+- Entity Framework
+- JWT Authentication
 
 <h2 id="routes">📍 API Endpoints</h2>
 
