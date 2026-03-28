@@ -33,6 +33,8 @@ Here you can list the main routes of your API, and what are their expected reque
 
 <h3 id="get-auth-detail">GET /user/{id}</h3>
 
+Here's how everything is inside:
+
 **RESPONSE**
 ```json
 {
