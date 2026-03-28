@@ -31,7 +31,7 @@ Here you can list the main routes of your API, and what are their expected reque
 | <kbd>GET /user/{id}</kbd>     | retrieves user info see [response details](#get-auth-detail)
 | <kbd>POST /login</kbd>     | authenticate user into the api see [request details](#post-auth-detail)
 
-<h3 id="get-auth-detail">GET /authenticate</h3>
+<h3 id="get-auth-detail">GET /user/{id}</h3>
 
 **RESPONSE**
 ```json
@@ -77,13 +77,13 @@ Here you can list the main routes of your API, and what are their expected reque
 }
 ```
 
-<h3 id="post-auth-detail">POST /authenticate</h3>
+<h3 id="post-auth-detail">POST /login</h3>
 
 **REQUEST**
 ```json
 {
-  "username": "fernandakipper",
-  "password": "4444444"
+  "username": "ismaelgabri.developer@gmail.com",
+  "password": "ItWorksOnMyMachine12"
 }
 ```
 
